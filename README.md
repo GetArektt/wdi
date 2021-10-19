@@ -33,5 +33,5 @@ Element 1.2 | Element 2.2
 
 
 Zdjecie:
-![Pies](/home/arek/Downloads/doge.jpg)
+![Pies](/home/arek/PycharmProjects/wdi/laboratiorium 2/doge.jpg)
 
