@@ -30,3 +30,8 @@ Lista:
 ------------ | -------------
 Element 1.1 | Element 2.1
 Element 1.2 | Element 2.2
+
+
+Zdjecie:
+![Pies](/home/arek/Downloads/doge.jpg)
+
