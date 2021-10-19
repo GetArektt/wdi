@@ -24,4 +24,9 @@ Lista:
  </h2>
  
  Kawalek kodu:
- 'print("Hello World")'
+ `print("Hello World")`
+
+1 Kolumna | 2 Kolumna
+------------ | -------------
+Element 1.1 | Element 2.1
+Element 1.2 | Element 2.2
