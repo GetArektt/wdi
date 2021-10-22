@@ -34,4 +34,4 @@ Element 1.2 | Element 2.2
 
 Zdjecie:
 ![Pies](laboratiorium&#32;2/doge.jpg)
-![cat](laboratiorium&#32;2/cat.jpg))
+![cat](laboratiorium&#32;2/cat.jpg)
