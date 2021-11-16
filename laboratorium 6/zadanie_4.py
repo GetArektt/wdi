@@ -4,15 +4,31 @@
 #    -Należy sprawdzić przypadki użycia dla kilku wczytywanych liczb naturalnych.
 #    -Należy obsłużyć wyjątek wczytania danej niebędącej liczbą naturalną.
 
+
+class NieDodatnia(Exception):
+    pass
+
+
+class Ujemna(Exception):
+    pass
+
+
 while True:
     try:
         a = int(input("Ile liczb chcialbys podac?"))
+        if type(a) != int:
+            raise ValueError
         if a > 0:
             break
-        else:
-            print("To musi byc liczba naturalna!")
-    except:
+        elif a <= 0:
+            raise NieDodatnia
+
+    except NieDodatnia:
+        print("Liczba niedodatnia! Sprobuj jeszcze raz")
+        pass
+    except ValueError:
         print("To musi byc liczba naturalna!")
+        pass
 
 i = 0
 global x
@@ -26,14 +42,19 @@ while i < a:
     while True:
         try:
             x = int(input("Prosze podac liczbe naturalna:"))
-            if x >= 0:
+            if type(x) != int:
+                raise ValueError
+            if 0 <= x:
                 break
-            else:
-                print("To musi byc liczba naturalna!")
-        except:
+            if x < 0:
+                raise Ujemna
+        except Ujemna:
+            print("Liczba ujemna! Sprobuj jeszcze raz")
+            pass
+        except ValueError:
             print("To musi byc liczba naturalna!")
 
-    while (flag == True) and (n < x + 1):
+    while flag and (n < x + 1):
         # print("n", n)
         A = n * n + n + 1
         # print("A", A)
@@ -41,7 +62,7 @@ while i < a:
             flag = False
             break
         if x % A == 0:
-            # print("Mamy dzielnik", A)
+            print("Mamy dzielnik", A)
             tmp = x  # Dodajemy pomocnicza zmienna, zeby  w razie czego moc powrocic do pierwotnej petli for
             while b:
                 # print("x", tmp)
@@ -55,9 +76,15 @@ while i < a:
                     # print(x-round(x))
                     b = False
         n += 1
-    if flag == True:
+    if flag:
         print("Nie znaleziono wielokrotnosci")
     else:
         print("Znaleziono wielokrotnosc")
 
 i += 1
+
+# Przypadki testowe
+# Litera, liczba zmiennoprzecinkowa, ujemna - program odrzuca
+# 241 - wielokrotnosc 7, program zwraca prawde
+# 333 - ma dzielniki 3 i 111, ale nie jest to wielokrotnosc 3 lub 7
+# 10101 lub 8430313 - dla duzych liczb rowniez znajduje wielokrotnosc
