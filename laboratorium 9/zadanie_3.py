@@ -1,7 +1,5 @@
 # Proszę napisać program wczytujący macierz o ustalonych wymiarach n×n i dokonujący odwrócenia tej macierzy.
 # Wymiar macierzy powinien być definiowany przez użytkownika.
-import random
-
 
 class wieksza_od_jeden(Exception):
     pass
@@ -22,14 +20,43 @@ def wczytywanie_wymiaru():
             print("To ma byc liczba calkowita!")
     return wymiar
 
+def wyznacznik(macierz, wynik=0):
+    indices = list(range(len(macierz)))
+    if len(macierz) == 2 and len(macierz[0]) == 2: #Przypadek dla wyznacznika macierzy 2x2
+        det = macierz[0][0] * macierz[1][1] - macierz[1][0] * macierz[0][1]
+        return det
+
+    for kolumna in indices: # Przechodzenie po kazdej kolumnie
+        macierz_kopia = macierz # Kopiujemy macierz
+        macierz_kopia = macierz_kopia[1:] #Usuwamy pierwszy wiersz
+        wysokosc = len(macierz_kopia)
+
+        for i in range(wysokosc):
+
+            macierz_kopia[i] = macierz_kopia[i][0:kolumna] + macierz_kopia[i][kolumna+1:] #Skreslamy dana kolumne
+
+        x = (-1) ** (kolumna % 2)
+        podwyznacznik = wyznacznik(macierz_kopia) #Za pomoca rekurencji otrzymujemy wyznacznik minora, az do skutku
+
+        wynik += x * macierz[0][kolumna] * podwyznacznik
+
+    return wynik
 
 def wypelnianie_macierzy(wymiar):
     macierz = []
     for _ in range(wymiar):  # Tworzymy pusta macierz o wymiarach n x n
         macierz.append([])
     for i in range(wymiar):
-        for _ in range(wymiar):
-            macierz[i].append(random.randint(1, 9))  # Wypelniamy ja losowymi liczbami z danego zakresu
+        for j in range(wymiar):
+            #macierz[i].append(random.randint(1, 9))  # Wypelniamy ja losowymi liczbami z danego zakresu
+            while True:
+                try:
+                    x = int(input()) #Wypelniamy macierz za pomoca wczytanych wartosci
+                    macierz[i].append(x)
+                    break
+                except ValueError:
+                    print("Zla wartosc")
+
         print(macierz[i])
     return macierz
 
@@ -48,6 +75,9 @@ def jednostka(wymiar):
 
 
 def odwracanie_macierzy(A, I, n):
+    if wyznacznik(A) ==0:
+        print("Wyznacznik rowny 0. Nie ma macierzy odwrotnej")
+        exit(2137)
     indices = list(range(n))
     for x in range(n):  # x - zmienna nad ktora pracujemy, praca na kolumnach
         wspolczynnik = 1.0 / A[x][x]  # Wspolczynnik liczby z przekatnej glownej
@@ -63,8 +93,7 @@ def odwracanie_macierzy(A, I, n):
             # for p in range(n):
             #     print(A[p])
             for j in range(n):
-                A[i][j] = A[i][j] - wspolczynnik_wiersza * A[x][
-                    j]  # kazdy wyraz z wiersza - wspolczynnik*wyraz z wiersza nad ktorym pracujemy
+                A[i][j] = A[i][j] - wspolczynnik_wiersza * A[x][j]  # kazdy wyraz z wiersza - wspolczynnik*wyraz z wiersza nad ktorym pracujemy
                 I[i][j] = I[i][j] - wspolczynnik_wiersza * I[x][j]
             print("Po")
             for p in range(n):
@@ -74,6 +103,8 @@ def odwracanie_macierzy(A, I, n):
 
 wymiar = wczytywanie_wymiaru()
 macierz = wypelnianie_macierzy(wymiar)
+print("Wyznacznik macierzy wynosi", wyznacznik(macierz))
+
 print("\n")
 macierz_jednostkowa = jednostka(wymiar)
 
@@ -115,3 +146,10 @@ for b in range(wymiar):
 # [-1.639484978540774, -0.8841201716738205, 0.545064377682404, 2.9785407725321917, 0.3347639484978543]
 # [1.5321888412017177, 0.7424892703862667, -0.43347639484978584, -2.8412017167381993, -0.07725321888412029]
 # [-4.437768240343352, -2.497854077253221, 1.6952789699570832, 8.240343347639493, 0.4506437768240348]
+
+# Dla macierzy
+# [3, -1, 1]
+# [5, 1, 4]
+# [-1, 3, 2]
+# Wyznacznik macierzy wynosi 0
+# Wyznacznik rowny 0. Nie ma macierzy odwrotnej
